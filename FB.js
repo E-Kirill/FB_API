@@ -2,8 +2,8 @@ let url = require('url'),
     fb = require('fb'),
     rp = require('request-promise');
 
-let client_secret = '',
-    client_id = '';
+let client_secret = '945f69a743735d99def8736505936170',
+    client_id = '1572818666064355';
 
 fb.options({
     appId: client_id,
@@ -36,7 +36,8 @@ class FB{
         };
     }
 
-    formatUrl (path) {
+    async formatUrl (path) {
+        await this.init;
         let link = url.format({
             hostname: 'graph.facebook.com/' + path,
             protocol: 'https',
@@ -49,7 +50,37 @@ class FB{
 
     async getUserName(id = '') {
         try {
-            let link = this.formatUrl(id);
+            let link = await this.formatUrl(id);
+            let res = await rp(link);
+            res = JSON.parse(res);
+            for(let key in res){
+                res[key] = res[key].toString("utf8");
+            }
+            return res;
+        }
+        catch(err) {
+            return Error(err);
+        }
+    }
+
+    async getGroupById(id = '') {
+        try {
+            let link = await this.formatUrl(id);
+            let res = await rp(link);
+            res = JSON.parse(res);
+            for(let key in res){
+                res[key] = res[key].toString("utf8");
+            }
+            return res;
+        }
+        catch(err) {
+            return Error(err);
+        }
+    }
+
+    async getGroupMembersById(id = '') {
+        try {
+            let link = await this.formatUrl(id + '/members');
             let res = await rp(link);
             res = JSON.parse(res);
             for(let key in res){
