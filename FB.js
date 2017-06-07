@@ -50,7 +50,6 @@ class FB{
         };
     }
 
-
     /**
      * Makes link for API with access token.
      * @function formatUrl
