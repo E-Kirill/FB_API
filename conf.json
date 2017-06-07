@@ -1,0 +1,7 @@
+{
+    "plugins": ["node_modules/jsdoc-babel"],
+    "babel": {
+        "presets": ["es2015", "es2017", "es2016"],
+        "extensions": ["js", "es6", "es7"]
+    }
+}
